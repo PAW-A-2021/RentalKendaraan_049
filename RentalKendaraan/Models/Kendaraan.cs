@@ -18,7 +18,6 @@ namespace RentalKendaraan.Models
         public string NoStnk { get; set; }
         public int? IdJenisKendaraan { get; set; }
         public string Ketersediaan { get; set; }
-
         public virtual JenisKendaraan IdJenisKendaraanNavigation { get; set; }
         public virtual ICollection<Peminjaman> Peminjamen { get; set; }
     }
