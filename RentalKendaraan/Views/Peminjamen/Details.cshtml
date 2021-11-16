@@ -11,34 +11,34 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TglPeminjamaan)
+            @Html.DisplayName("Tanggal Peminjaman")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TglPeminjamaan)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Biaya)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Biaya")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Biaya)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCustomerNavigation)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Nama Customer")
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCustomerNavigation.IdCustomer)
+            @Html.DisplayFor(model => model.IdCustomerNavigation.NamaCustomer)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdJaminanNavigation)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Jaminan")
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdJaminanNavigation.IdJaminan)
+            @Html.DisplayFor(model => model.IdJaminanNavigation.NamaJaminan)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdKendaraanNavigation)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Jenis Kendaraan")
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdKendaraanNavigation.IdKendaraan)
+            @Html.DisplayFor(model => model.IdKendaraanNavigation.NamaKendaraan)
         </dd>
     </dl>
 </div>

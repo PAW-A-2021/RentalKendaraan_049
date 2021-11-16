@@ -10,35 +10,35 @@
     <h4>Kendaraan</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NamaKendaraan)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Nama Kendaraan")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NamaKendaraan)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NoPolisi)
+        <dt class="col-sm-2">
+            @Html.DisplayName("No Polisi")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NoPolisi)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NoStnk)
+        <dt class="col-sm-2">
+            @Html.DisplayName("No STNK")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NoStnk)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ketersediaan)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Ketersediaan")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Ketersediaan)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdJenisKendaraanNavigation)
+        <dt class="col-sm-2">
+            @Html.DisplayName("Jenis Kendaraan")
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdJenisKendaraanNavigation.IdJenisKendaraan)
+            @Html.DisplayFor(model => model.IdJenisKendaraanNavigation.NamaJenisKendaraan)
         </dd>
     </dl>
 </div>
