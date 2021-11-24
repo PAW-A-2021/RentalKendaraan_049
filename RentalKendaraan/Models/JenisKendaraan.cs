@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -11,8 +12,9 @@ namespace RentalKendaraan.Models
         {
             Kendaraans = new HashSet<Kendaraan>();
         }
-
+        [Required(ErrorMessage = "ID Jenis Kendaraan tidak boleh kosong")]
         public int IdJenisKendaraan { get; set; }
+        [Required(ErrorMessage = "Jenis Kendaraan tidak boleh kosong")]
         public string NamaJenisKendaraan { get; set; }
 
         public virtual ICollection<Kendaraan> Kendaraans { get; set; }
