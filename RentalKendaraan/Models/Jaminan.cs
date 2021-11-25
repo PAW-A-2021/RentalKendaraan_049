@@ -16,6 +16,7 @@ namespace RentalKendaraan.Models
         [Required(ErrorMessage = "ID Jaminan tidak boleh kosong")]
         public int IdJaminan { get; set; }
         [Required(ErrorMessage = "Nama Jaminan tidak boleh kosong")]
+        [MaxLength(40, ErrorMessage = "Maksimal")]
         public string NamaJaminan { get; set; }
 
         public virtual ICollection<Peminjaman> Peminjamen { get; set; }

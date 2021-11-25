@@ -14,7 +14,7 @@ namespace RentalKendaraan.Models
         }
         [Required(ErrorMessage = "ID Kendaraan tidak boleh kosong")]
         public int IdKendaraan { get; set; }
-
+        [Required(ErrorMessage = "Nama Kendaraan tidak boleh kosong")]
         public string NamaKendaraan { get; set; }
         [Required(ErrorMessage = "No Polisi tidak boleh kosong")]
         public string NoPolisi { get; set; }

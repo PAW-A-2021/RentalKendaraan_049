@@ -17,6 +17,7 @@ namespace RentalKendaraan.Models
         public int IdCustomer { get; set; }
 
         [Required(ErrorMessage="Nama Customer tidak boleh kosong")]
+        [MaxLength(30, ErrorMessage = "Maksimal")]
         public string NamaCustomer { get; set; }
         [Required(ErrorMessage = "NIK tidak boleh kosong")]
         [RegularExpression("^[0-9]*$", ErrorMessage ="Hanya bisa diisi oleh angka !!")]
@@ -24,6 +25,7 @@ namespace RentalKendaraan.Models
         [MaxLength(16, ErrorMessage = "NIK Minimal 16 angka")]
         public string Nik { get; set; }
         [Required(ErrorMessage = "Alamat tidak boleh kosong")]
+        [MaxLength(150, ErrorMessage = "Maksimal")]
         public string Alamat { get; set; }
         [Required(ErrorMessage = "No HP tidak boleh kosong")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Hanya bisa diisi oleh angka !!")]
