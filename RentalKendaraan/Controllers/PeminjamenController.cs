@@ -19,10 +19,33 @@ namespace RentalKendaraan.Controllers
         }
 
         // GET: Peminjamen
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string pmnjn)
         {
-            var rentKendaraanContext = _context.Peminjamen.Include(p => p.IdCustomerNavigation).Include(p => p.IdJaminanNavigation).Include(p => p.IdKendaraanNavigation);
-            return View(await rentKendaraanContext.ToListAsync());
+            //buat list menyimpan ketersediaan
+            var gndrList = new List<string>();
+            //query mengambil data
+            var gndrQuery = from d in _context.Genders orderby d.NamaGender select d.NamaGender;
+
+            gndrList.AddRange(gndrQuery.Distinct());
+
+            //untuk menampilkan diview
+            ViewBag.gndr = new SelectList(gndrList);
+
+            //panggil db context
+            var menu = from m in _context.Customers.Include(k => k.IdGenderNavigation) select m;
+
+            //untuk search data
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                menu = menu.Where(s => s.NamaCustomer.Contains(searchString) || s.Alamat.Contains(searchString) || s.Nik.Contains(searchString));
+            }
+
+            //untuk memilih dropdown NamaGender
+            if (!string.IsNullOrEmpty(pmnjn))
+            {
+                menu = menu.Where(x => x.NamaCustomer == pmnjn);
+            }
+            return View(await menu.ToListAsync());
         }
 
         // GET: Peminjamen/Details/5
