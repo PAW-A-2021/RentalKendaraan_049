@@ -13,43 +13,73 @@ namespace RentalKendaraan.Controllers
     {
         private readonly RentKendaraanContext _context;
 
+        public object sortOrder { get; private set; }
+
         public PeminjamenController(RentKendaraanContext context)
         {
             _context = context;
         }
 
         // GET: Peminjamen
-        public async Task<IActionResult> Index(string searchString, string jminan)
+        public async Task<IActionResult> Index(string searchString, string ktsd, string currentFilter, int? pageNumber, string sortOrder)
         {
 
-/*            var rentKendaraanContext = _context.Peminjamen.Include(p => p.IdCustomerNavigation).Include(p => p.IdJaminanNavigation).Include(p => p.IdKendaraanNavigation);
-            return View(await rentKendaraanContext.ToListAsync());*/
+            var ktsdList = new List<string>();
+            var ktsdQuery = from d in _context.Peminjamen orderby d.IdKendaraanNavigation.NamaKendaraan select d.IdKendaraanNavigation.NamaKendaraan.ToString();
 
-            //buat list menyimpan ketersediaan
-            var gndrList = new List<string>();
-            //query mengambil data
-            var gndrQuery = from d in _context.Peminjamen orderby d.IdJaminanNavigation.NamaJaminan select d.IdJaminanNavigation.NamaJaminan;
+            ktsdList.AddRange(ktsdQuery.Distinct());
+            ViewBag.ktsd = new SelectList(ktsdList);
 
-            gndrList.AddRange(gndrQuery.Distinct());
+            var menu = from m in _context.Peminjamen.Include(k => k.IdCustomerNavigation).Include(k => k.IdJaminanNavigation).Include(k => k.IdKendaraanNavigation) select m;
 
-            //untuk menampilkan diview
-            ViewBag.jminan = new SelectList(gndrList);
+            if (!string.IsNullOrEmpty(ktsd))
+            {
+                menu = menu.Where(x => x.Biaya.ToString() == ktsd);
+            }
 
-            //panggil db context
-            var menu = from m in _context.Peminjamen.Include(k => k.IdJaminanNavigation) select m;
-
-            //untuk search data
             if (!string.IsNullOrEmpty(searchString))
             {
-                menu = menu.Where(s => s.IdJaminanNavigation.NamaJaminan.Contains(searchString) || s.IdKendaraanNavigation.NamaKendaraan.Contains(searchString));
+                menu = menu.Where(s => s.TglPeminjamaan.ToString().Contains(searchString) || s.Biaya.ToString().Contains(searchString) || s.IdCustomer.ToString().Contains(searchString) || s.IdJaminan.ToString().Contains(searchString) || s.IdKendaraan.ToString().Contains(searchString));
             }
 
-            //untuk memilih dropdown NamaJaminan
-            if (!!string.IsNullOrEmpty(jminan))
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
             {
-                menu = menu.Where(x => x.IdJaminanNavigation.NamaJaminan == jminan);
+                pageNumber = 1;
             }
-            return View(await menu.ToListAsync());
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            //definisi jumlah data pada halaman
+            int pageSize = 5;
+
+            //untuk sorting
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.IdCustomerNavigation.NamaCustomer);
+                    break;
+                case "Date":
+                    menu = menu.OrderBy(s => s.TglPeminjamaan);
+                    break;
+                case "date_desc":
+                    menu = menu.OrderByDescending(s => s.TglPeminjamaan);
+                    break;
+                default: //name ascending
+                    menu = menu.OrderBy(s => s.IdCustomerNavigation.NamaCustomer);
+                    break;
+            }
+
+            return View(await PaginatedList<Peminjaman>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+
         }
 
         // GET: Peminjamen/Details/5
