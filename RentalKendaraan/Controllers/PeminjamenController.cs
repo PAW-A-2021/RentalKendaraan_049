@@ -13,17 +13,14 @@ namespace RentalKendaraan.Controllers
     {
         private readonly RentKendaraanContext _context;
 
-        public object sortOrder { get; private set; }
-
         public PeminjamenController(RentKendaraanContext context)
         {
             _context = context;
         }
 
         // GET: Peminjamen
-        public async Task<IActionResult> Index(string searchString, string ktsd, string currentFilter, int? pageNumber, string sortOrder)
+        public async Task<IActionResult> Index(string ktsd, string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
-
             var ktsdList = new List<string>();
             var ktsdQuery = from d in _context.Peminjamen orderby d.IdKendaraanNavigation.NamaKendaraan select d.IdKendaraanNavigation.NamaKendaraan.ToString();
 
@@ -78,8 +75,6 @@ namespace RentalKendaraan.Controllers
             }
 
             return View(await PaginatedList<Peminjaman>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
-
-
         }
 
         // GET: Peminjamen/Details/5
